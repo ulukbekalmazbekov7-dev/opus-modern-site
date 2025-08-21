@@ -27,20 +27,16 @@ jobs:
           node-version: "20"
           cache: "npm"
 
-      - name: Install dependencies
-        run: npm ci
-
-      # Если хочешь, можешь оставить configure-pages со static_site_generator: next.
-      # Тогда basePath/опции подставятся автоматически.
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
 
-      - name: Build & Export
-        run: |
-          npm run build
-          npx next export
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with Next.js
+        run: npx next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
