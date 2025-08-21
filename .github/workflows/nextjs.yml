@@ -24,19 +24,20 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: "20"   # без cache, чтобы не требовался lock-файл
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund  # вместо npm ci
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
           static_site_generator: next
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build with Next.js
-        run: npx next build
+      - name: Build & Export
+        run: |
+          npm run build
+          npx next export               # создаст папку ./out
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
